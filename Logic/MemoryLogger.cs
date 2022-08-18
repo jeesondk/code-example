@@ -2,13 +2,23 @@
 
 namespace EntryLogger.Logic
 {
-    public class MemoryLogger
+    public class MemoryLogger : IMemoryLogger
     {
-        static List<LogEntry> internalEntries = new List<LogEntry>();
+        private readonly List<LogEntry> _internalEntries = new();
 
-        public static void Run(LogEntry entry)
+        public MemoryLogger()
+        {
+            LogDelegates.WriteMessage += LogMessage;
+        }
+
+        /*public static void Run(LogEntry entry)
         {
             internalEntries.Add(entry);
+        }*/
+
+        public void LogMessage(LogEntry entry)
+        {
+            _internalEntries.Add(entry);
         }
     }
 }
